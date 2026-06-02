@@ -4,13 +4,14 @@ import guru.springframework.spring5recipeapp.domain.*;
 import guru.springframework.spring5recipeapp.repositories.CategoryRepository;
 import guru.springframework.spring5recipeapp.repositories.RecipeRepository;
 import guru.springframework.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import guru.springframework.spring5recipeapp.repositories.reactive.CategoryReactiveRepository;
+import guru.springframework.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
 import guru.springframework.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,9 +28,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
-
-    @Autowired
-    UnitOfMeasureReactiveRepository reactiveRepository;
 
     public RecipeBootstrap(CategoryRepository categoryRepository,
                            RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
@@ -55,8 +53,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         log.debug("Loading Bootstrap Data");
 
-        log.error("#######");
-        log.error("Count: " + reactiveRepository.count().block().toString());
     }
 
     private void loadCategories(){
