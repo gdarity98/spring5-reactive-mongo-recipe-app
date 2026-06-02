@@ -1,0 +1,40 @@
+# This config was automatically generated from your source code
+# Stacks detected: deps:java:.
+version: 2.1
+
+jobs:
+  test-java:
+    docker:
+      - image: cimg/openjdk:17.0
+    working_directory: ~/repo
+    environment:
+      MAVEN_OPTS: -Xmx3200m
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }}
+            - v1-dependencies-
+      - run: mvn dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      #  FIX 1: Changed from Cobertura to JaCoCo clean test execution
+      - run: mvn clean verify
+
+      - store_test_results:
+          path: target/surefire-reports
+
+      - run:
+          name: Upload to Codecov
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov -t ${CODECOV_TOKEN}
+
+workflows:
+  upload-to-codecov:
+    jobs:
+      - test-java
