@@ -18,11 +18,7 @@ import java.util.UUID;
 @Setter
 @Document
 public class Category {
-//    @Id
-//    @MongoId(FieldType.OBJECT_ID)
     private String id = UUID.randomUUID().toString();
     private String description;
-
-    @DBRef
     private Set<Recipe> recipes;
 }

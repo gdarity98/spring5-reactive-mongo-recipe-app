@@ -18,17 +18,10 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Ingredient {
-
-//    @Id
-//    @MongoId(FieldType.OBJECT_ID)
     private String id = UUID.randomUUID().toString();
     private String description;
     private BigDecimal amount;
-
-    @DBRef
     private UnitOfMeasure uom;
-
-    //private Recipe recipe;
 
     public Ingredient() {
 

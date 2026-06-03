@@ -35,8 +35,6 @@ public class Recipe {
     private Byte[] image;
     private Difficulty difficulty;
     private Notes notes;
-
-    @DBRef
     private List<Category> categories = new ArrayList<>();
 
     public void setNotes(Notes notes) {
