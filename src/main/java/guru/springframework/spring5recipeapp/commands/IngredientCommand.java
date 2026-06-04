@@ -7,6 +7,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Getter
@@ -17,8 +20,15 @@ public class IngredientCommand {
     @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String recipeId;
+
+    @NotBlank
     private String description;
+
+    @NotNull
+    @Min(1)
     private BigDecimal amount;
+
+    @NotNull
     private UnitOfMeasureCommand uom;
-    private RecipeCommand recipe;
+//    private RecipeCommand recipe;
 }
